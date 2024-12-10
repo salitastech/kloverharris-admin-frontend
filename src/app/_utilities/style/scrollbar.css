@@ -1,0 +1,33 @@
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(0, 0, 0, 0) transparent;
+  }
+
+  *:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.2);
+  }

@@ -1,0 +1,10 @@
+{
+  "sidebar": {
+    "menu": {
+      "sample": "Sample Menu"
+    },
+    "menuItem": {
+      "sample": "Sample Item"
+    }
+  }
+}
