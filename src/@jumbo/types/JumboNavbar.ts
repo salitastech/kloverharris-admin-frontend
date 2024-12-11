@@ -1,6 +1,6 @@
 import { Palette, Theme } from '@mui/material';
 
-type NavbarContext = {
+export type NavbarContext = {
   items: MenuItems;
   groupBehaviour: 'collapsible' | 'popover';
   mini: boolean;
@@ -9,29 +9,29 @@ type NavbarContext = {
   miniAndClosed: boolean;
 };
 
-type NavbarItem = {
+export type NavbarItem = {
   label: string;
   path: string;
   icon?: string;
   target?: string;
 };
 
-type NavbarGroup = {
+export type NavbarGroup = {
   label: string;
   children: (NavbarGroup | NavbarItem)[];
   collapsible?: boolean;
   icon?: string;
 };
 
-type NavbarSection = {
+export type NavbarSection = {
   label: string;
-  children: (NavbarGroup | NavbarItem)[];
+  children?: (NavbarGroup | NavbarItem)[];
 };
 
-type MenuItem = NavbarSection | NavbarGroup | NavbarItem;
-type MenuItems = MenuItem[];
+export type MenuItem = NavbarSection | NavbarGroup | NavbarItem;
+export type MenuItems = MenuItem[];
 
-type NavbarTheme = Theme & {
+export type NavbarTheme = Theme & {
   palette: Palette & {
     nav: {
       action: {
@@ -48,13 +48,4 @@ type NavbarTheme = Theme & {
       };
     };
   };
-};
-export {
-  type MenuItem,
-  type MenuItems,
-  type NavbarContext,
-  type NavbarGroup,
-  type NavbarItem,
-  type NavbarSection,
-  type NavbarTheme,
 };
