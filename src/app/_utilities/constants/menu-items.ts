@@ -12,8 +12,11 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
     {
       label: sidebar.menu.clients,
       children: [
-        { label: sidebar.menuItem.add_new_client, path: '#' },
-        { label: sidebar.menuItem.clients, path: '#' },
+        {
+          label: sidebar.menuItem.add_new_client,
+          path: `/${locale}/clients/new`,
+        },
+        { label: sidebar.menuItem.clients, path: `/${locale}/clients` },
       ],
     },
   ];
