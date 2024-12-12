@@ -1,4 +1,4 @@
-import { Footer, Header, Sidebar } from '@app/_components/layout';
+import { Header, Sidebar } from '@app/_components/layout';
 import { defaultLayoutConfig } from '@app/_config/layouts';
 import { getMenus } from '@app/_services';
 import { JumboLayout, JumboLayoutProvider } from '@jumbo/components';

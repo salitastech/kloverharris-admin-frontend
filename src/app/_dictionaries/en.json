@@ -1,10 +1,12 @@
 {
   "sidebar": {
     "menu": {
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "clients": "Clients"
     },
     "menuItem": {
-      "clients": "Clients Management",
+      "clients": "View All",
+      "add_new_client": "Add New Client",
       "listing": "Listing",
       "crm": "Crm",
       "intranet": "Intranet",
