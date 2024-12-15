@@ -38,36 +38,36 @@ export default async function Dashboard({ params }: { params: Params }) {
         <Grid2 size={{ xs: 12 }}>
           <WelcomeSummary title={widgets.title.welcomeEMA} />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
           <NewCustomers title={widgets.title.newCustomer} />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
           <RevenueHistory title={widgets.title.revenueHistory} />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
-          <NewCustomers title={widgets.title.newCustomer} />
+        <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
+          <NewCustomers title={widgets.title.newEmployees} />
         </Grid2>
-        <Grid2 size={{ xs: 12, lg: 4 }}>
+        <Grid2 size={{ xs: 12, lg: 3 }}>
           <Growth title={widgets.title.growth} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
-          <ProjectCounterCard subheader={widgets.subheader.projects} />
+          <ProjectCounterCard subheader={widgets.subheader.blogs} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
-          <TasksCounterCard subheader={widgets.subheader.tasks} />
+          <TasksCounterCard subheader={widgets.subheader.publications} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
-          <TeamsCounterCard subheader={widgets.subheader.teams} />
+          <TeamsCounterCard subheader={widgets.subheader.new_contacts} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 3 }}>
-          <FilesCounterCard subheader={widgets.subheader.files} />
+          <FilesCounterCard subheader={widgets.subheader.demo_bookings} />
         </Grid2>
         <Grid2 size={{ xs: 12, md: 6 }}>
           <TasksList2 scrollHeight={373} title={widgets.title.taskList} />
         </Grid2>
         <Grid2 size={{ xs: 12, md: 6 }}>
           <CurrentProjectsList
-            title={widgets.title.currentProjects}
+            title={widgets.title.latestJobs}
             subheader={widgets.subheader.currentProjects}
           />
         </Grid2>
@@ -77,18 +77,14 @@ export default async function Dashboard({ params }: { params: Params }) {
         <Grid2 size={{ xs: 12, md: 5, lg: 4 }}>
           <TicketsStatus title={widgets.title.ticketStatus} />
         </Grid2>
-        <Grid2 size={{ xs: 12 }}>
-          <RevenueOverview title={widgets.title.revenueOverview} />
-        </Grid2>
+       
         <Grid2 size={{ xs: 12, md: 6 }}>
           <RecentActivities1
             title={widgets.title.recentActivities}
             scrollHeight={306}
           />
         </Grid2>
-        <Grid2 size={{ xs: 12, md: 6 }}>
-          <CurrencyCalculator title={widgets.title.currencyCal} />
-        </Grid2>
+      
       </Grid2>
     </Container>
   );

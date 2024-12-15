@@ -8,3 +8,4 @@ export * from './NotFound404';
 export * from './SearchGlobal';
 export * from './SidebarToggleButton';
 export * from './Spinner';
+export * from './View';

@@ -6,11 +6,12 @@
       "clients": "Clients",
       "employees": "Employees",
       "company_management": "Company Management",
+      "website_management": "Website Management",
       "job_management": "Job Management",
       "leave_management": "Leave Management",
       "user_management": "User Management",
       "support": "Support",
-      "settings": "Settins"
+      "settings": "Settings"
       
     },
     "menuItem": {
@@ -33,12 +34,14 @@
       "leave_policies": "Leave Policies",
       "notification_settings": "Notificaiton Settings",
       "add_new_job": "Add New",
-
-
-
-
+      "insights": "Insights",
+      "publications": "Publications",
+      "contacts": "Contacts",
+      "book_demo": "Demo Bookings",
       "add_new_client": "Add New",
       "add_new_employee": "Onboarding",
+
+
       "listing": "Listing",
       "crm": "Crm",
       "intranet": "Intranet",
@@ -152,7 +155,7 @@
       "weeklySales": "Weekly Sales",
       "latestPosts": "Latest Posts",
       "marketingCampaign": "Marketing campaign",
-      "currentProjects": "Current projects list",
+      "latestJobs": "Job list",
       "newRequests": "New Requests",
       "recentActivities": "Recent Activities",
       "taskListExpandable": "Tasks",
@@ -184,6 +187,7 @@
       "welcomeEMA": "Welcome to KloverHarris",
       "revenueHistory": "Total Revenue",
       "newCustomer": "New Clients",
+      "newEmployees": "New Employees",
       "growth": "Growth",
       "taskList": "Task List",
       "recentTicket": "Recent Tickets",
@@ -214,7 +218,7 @@
       "weeklySales": "Past two weeks",
       "latestPosts": "Recently wrote articles",
       "marketingCampaign": "Last Update 2021",
-      "currentProjects": "Recently updated projects",
+      "currentProjects": "Recently updated Jobs",
       "newRequests": "Recent new requests this week",
       "taskListExpandable": "A complete todo list",
       "siteVisitors": "Traffic received this week from around the globe",
@@ -248,10 +252,10 @@
       "popularAuthors": "Authors with 500k+ avg. view",
       "storyofTheDay": "Story of the Day",
       "dealsClosed": "This year",
-      "projects": "Projects",
-      "tasks": "Tasks",
-      "teams": "Teams",
-      "files": "Files"
+      "blogs": "Insights",
+      "publications": "Publications",
+      "new_contacts": "New Contacts",
+      "demo_bookings": "Demo Bookings"
     }
   },
   "extraPages": {
@@ -264,7 +268,7 @@
   },
   "views": {
     "title": {
-      "projects": "Projects",
+      "insights": "Insights",
       "users": "Users"
     }
   },

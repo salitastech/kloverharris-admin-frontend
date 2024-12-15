@@ -11,6 +11,30 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [{ label: sidebar.menu.dashboard, path: `/${locale}`, icon: 'misc', }],
     },
     {
+      label: sidebar.menu.website_management,
+      children: [
+        {
+          label: sidebar.menuItem.insights,
+          path: `/${locale}/website/insights`,
+          icon: 'contact-us',
+        },
+        {
+          label: sidebar.menuItem.publications,
+          path: `/${locale}/website/publications`,
+          icon: 'users-list',
+        },
+        {
+          label: sidebar.menuItem.contacts,
+          path: `/${locale}/website/contacts`,
+          icon: 'contact-us',
+        }, {
+          label: sidebar.menuItem.book_demo,
+          path: `/${locale}/website/demo`,
+          icon: 'contact-us',
+        },
+      ],
+    },
+    {
       label: sidebar.menu.company_management,
       children: [
         {
