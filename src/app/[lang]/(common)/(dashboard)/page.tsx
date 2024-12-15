@@ -39,6 +39,9 @@ export default async function Dashboard({ params }: { params: Params }) {
           <WelcomeSummary title={widgets.title.welcomeEMA} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
+          <NewCustomers title={widgets.title.newCustomer} />
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
           <RevenueHistory title={widgets.title.revenueHistory} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>

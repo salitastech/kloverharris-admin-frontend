@@ -2,11 +2,43 @@
   "sidebar": {
     "menu": {
       "dashboard": "Dashboard",
-      "clients": "Clients"
+      "website": "Website Management",
+      "clients": "Clients",
+      "employees": "Employees",
+      "company_management": "Company Management",
+      "job_management": "Job Management",
+      "leave_management": "Leave Management",
+      "user_management": "User Management",
+      "support": "Support",
+      "settings": "Settins"
+      
     },
     "menuItem": {
-      "clients": "View All",
-      "add_new_client": "Add New Client",
+      "clients": "Manage Clients",
+      "employee": "Manage",
+      "employees": "Manage Employees",
+      "departments": "Departments",
+      "jobs": "Manage Jobs",
+      "job_applications": "Job Applications",
+      "interviews": "Interviews",
+      "all_leaves": "Leaves",
+      "leave_requests": "Manage Leaves",
+      "admins": "Manage Admins",
+      "roles_permissions": "Roles and Permissions",
+      "activity_logs": "Activity Logs",
+      "tickets": "Tickets",
+      "reports": "Reports",
+      "statistics": "Statistics",
+      "general_settings": "Settings",
+      "leave_policies": "Leave Policies",
+      "notification_settings": "Notificaiton Settings",
+      "add_new_job": "Add New",
+
+
+
+
+      "add_new_client": "Add New",
+      "add_new_employee": "Onboarding",
       "listing": "Listing",
       "crm": "Crm",
       "intranet": "Intranet",
