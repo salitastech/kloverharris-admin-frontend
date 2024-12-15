@@ -11,7 +11,9 @@ import {
   Paper,
   MenuItem,
 } from "@mui/material";
-
+import {
+  DzPreviews,
+} from '@app/_components/extensions/dropzone';
 const countries = [
   { id: 1, name: "United States" },
   { id: 2, name: "Canada" },
@@ -230,6 +232,9 @@ const AddNewClientPage = () => {
                 ))}
               </TextField>
             </Grid>
+            <Grid item xs={12}>   <DzPreviews /></Grid>
+     
+
 
             {/* Admin Details */}
             <Grid item xs={12}>
@@ -294,6 +299,7 @@ const AddNewClientPage = () => {
                 variant="outlined"
               />
             </Grid>
+            <Grid item xs={12} sm={6}>   <DzPreviews /></Grid>
 
             <Grid item xs={12}>
               <Box sx={{ textAlign: "right" }}>
