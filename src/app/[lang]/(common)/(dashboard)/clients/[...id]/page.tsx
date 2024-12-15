@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
 import {
+  Box,
+  Button,
   Container,
-  Paper,
-  Typography,
   Grid,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
-  TablePagination,
-  Button,
-  Box,
-  IconButton,
+  Typography,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-
+import React, { useEffect, useState } from 'react';
 
 // Mock data for the tables
 const mockAdmins = [
@@ -57,18 +56,18 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
     setPage(newPage);
   };
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  useEffect(() => {
-    
-  }, [clientId]);
+  useEffect(() => {}, [clientId]);
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth='lg'>
+      <Typography variant='h4' gutterBottom>
         Company Client Profile
       </Typography>
 
@@ -76,7 +75,7 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Company Details Section */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6">Company Information</Typography>
+            <Typography variant='h6'>Company Information</Typography>
             <Box sx={{ marginTop: 2 }}>
               {/* Add company details here, such as company name, email, etc. */}
             </Box>
@@ -86,14 +85,22 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Admins Table */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>Company Admins</Typography>
-            <Box sx={{ marginBottom: 2, display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant='h6' gutterBottom>
+              Company Admins
+            </Typography>
+            <Box
+              sx={{
+                marginBottom: 2,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
               <TextField
-                variant="outlined"
-                label="Search Admins"
+                variant='outlined'
+                label='Search Admins'
                 value={search}
                 onChange={handleSearch}
-                size="small"
+                size='small'
                 sx={{ width: '40%' }}
               />
             </Box>
@@ -108,9 +115,11 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
                 </TableHead>
                 <TableBody>
                   {admins
-                    .filter(admin => admin.name.toLowerCase().includes(search.toLowerCase()))
+                    .filter((admin) =>
+                      admin.name.toLowerCase().includes(search.toLowerCase())
+                    )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map(admin => (
+                    .map((admin) => (
                       <TableRow key={admin.id}>
                         <TableCell>{admin.name}</TableCell>
                         <TableCell>{admin.email}</TableCell>
@@ -122,7 +131,7 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              component="div"
+              component='div'
               count={admins.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -135,14 +144,22 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Employees Table */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>Employees</Typography>
-            <Box sx={{ marginBottom: 2, display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant='h6' gutterBottom>
+              Employees
+            </Typography>
+            <Box
+              sx={{
+                marginBottom: 2,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
               <TextField
-                variant="outlined"
-                label="Search Employees"
+                variant='outlined'
+                label='Search Employees'
                 value={search}
                 onChange={handleSearch}
-                size="small"
+                size='small'
                 sx={{ width: '40%' }}
               />
             </Box>
@@ -157,9 +174,11 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
                 </TableHead>
                 <TableBody>
                   {employees
-                    .filter(employee => employee.name.toLowerCase().includes(search.toLowerCase()))
+                    .filter((employee) =>
+                      employee.name.toLowerCase().includes(search.toLowerCase())
+                    )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map(employee => (
+                    .map((employee) => (
                       <TableRow key={employee.id}>
                         <TableCell>{employee.name}</TableCell>
                         <TableCell>{employee.email}</TableCell>
@@ -171,7 +190,7 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              component="div"
+              component='div'
               count={employees.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -184,7 +203,9 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Open Job Roles Table */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>Open Job Roles</Typography>
+            <Typography variant='h6' gutterBottom>
+              Open Job Roles
+            </Typography>
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
@@ -194,7 +215,7 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {jobRoles.map(job => (
+                  {jobRoles.map((job) => (
                     <TableRow key={job.id}>
                       <TableCell>{job.title}</TableCell>
                       <TableCell>{job.status}</TableCell>
@@ -209,7 +230,9 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Open Interviews Table */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>Open Interviews</Typography>
+            <Typography variant='h6' gutterBottom>
+              Open Interviews
+            </Typography>
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
@@ -219,7 +242,7 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {interviews.map(interview => (
+                  {interviews.map((interview) => (
                     <TableRow key={interview.id}>
                       <TableCell>{interview.jobTitle}</TableCell>
                       <TableCell>{interview.status}</TableCell>
@@ -234,15 +257,13 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
         {/* Action Buttons */}
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-            <Button variant="contained" color="primary">
+            <Button variant='contained' color='primary'>
               Manage Employees
             </Button>
-            <Button variant="contained" color="secondary">
+            <Button variant='contained' color='secondary'>
               Disable Company
             </Button>
-            <Button variant="contained" color="default">
-              Send Message
-            </Button>
+            <Button variant='contained'>Send Message</Button>
           </Box>
         </Grid>
       </Grid>
