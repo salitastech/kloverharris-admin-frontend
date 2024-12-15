@@ -15,18 +15,18 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.add_new_client,
-          path: `/${locale}/company-clients/new`,
+          path: `/${locale}/clients/new`,
           icon: 'contact-us',
         },
-        { label: sidebar.menuItem.clients, path: `/${locale}/company-clients` },
+        { label: sidebar.menuItem.clients, path: `/${locale}/clients`, icon: 'contact-us', },
         {
           label: sidebar.menuItem.employees,
-          path: `/${locale}/company-clients/employees`,
+          path: `/${locale}/clients/employees`,
           icon: 'users-list',
         },
         {
           label: sidebar.menuItem.departments,
-          path: `/${locale}/company-clients/departments`,
+          path: `/${locale}/clients/departments`,
           icon: 'contact-us',
         },
       ],
