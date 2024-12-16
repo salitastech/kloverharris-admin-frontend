@@ -17,19 +17,16 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
-import { authState } from '../../../../lib/recoil/store';
 import { authUser } from './data';
 
 const AuthUserPopover = () => {
   const router = useRouter();
   const { theme } = useJumboTheme();
-  const setState = useSetRecoilState(authState);
 
   const logout = React.useCallback(() => {
     (async () => {
       await signOut(() => {
-        setState({ isLoggedIn: false, user: null });
+        // Todo: reset state
         router.refresh();
       });
     })();

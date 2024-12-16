@@ -11,11 +11,12 @@ import OtpInput from 'react18-input-otp';
 type Props = {
   title?: string;
   open: boolean;
+  loading?: boolean;
   onClose: () => void;
   onSubmit: (otp: string) => void;
 };
 
-const OtpModal = ({ open, onClose, onSubmit }: Props) => {
+const OtpModal = ({ loading, open, onClose, onSubmit }: Props) => {
   const [otp, setOtp] = useState<string>('');
 
   const handleOtpSubmit = () => {
@@ -38,6 +39,7 @@ const OtpModal = ({ open, onClose, onSubmit }: Props) => {
         }}
       >
         <OtpInput
+          isDisabled={loading}
           inputStyle='bg-[#FAFAFA] dark:bg-mentorfy-dark1 dark:text-white mx-[5px] rounded-[5px] !w-[300px] h-[36px]'
           isInputNum
           focusStyle='border border-mentorfy-primary'
@@ -47,14 +49,14 @@ const OtpModal = ({ open, onClose, onSubmit }: Props) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color='secondary'>
+        <Button disabled={loading} onClick={onClose} color='secondary'>
           Cancel
         </Button>
         <Button
           onClick={handleOtpSubmit}
           variant='contained'
           color='primary'
-          disabled={!otp}
+          disabled={!otp || loading}
         >
           Verify OTP
         </Button>

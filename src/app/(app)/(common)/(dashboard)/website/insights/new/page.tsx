@@ -1,4 +1,4 @@
-import { getDictionary } from '@app/[lang]/dictionaries';
+import { getDictionary } from '@app/(app)/dictionaries';
 import { WysiwygEditor } from '@app/_components/extensions/editors/wysiwyg';
 import { CONTAINER_MAX_WIDTH } from '@app/_config/layouts';
 import { Container } from '@mui/material';

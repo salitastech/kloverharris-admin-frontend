@@ -1,8 +1,5 @@
 import { Link } from '@app/_components/_core';
 import OtpModal from '@app/_components/modals/otp-modal';
-import { authUser } from '@app/_components/popovers/AuthUserPopover/data';
-import { ACCESS_TOKEN_KEY } from '@app/_utilities/constants';
-import { setCookie, signIn } from '@app/_utilities/helpers';
 import {
   JumboCheckbox,
   JumboForm,
@@ -13,51 +10,27 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconButton, InputAdornment, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { enqueueSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { authState } from '../../../../../lib/recoil/store';
+
+import {
+  useFinalizeLoginMutation,
+  useInitiateLoginMutation,
+} from '../../../../../lib/redux/api';
 import { validationSchema } from '../validation';
 
 const LoginForm = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [values, setValues] = React.useState({
-    password: '',
+    email: 'admin@kloverharris.com',
+    password: 'password',
     showPassword: false,
   });
   const [authModal, setAuthModal] = useState<boolean>(false);
   const router = useRouter();
-  const setState = useSetRecoilState(authState);
+  const [initiateLogin] = useInitiateLoginMutation();
+  const [finalizeLogin, { isLoading: verifying }] = useFinalizeLoginMutation();
 
-  const handleLogin = async (data: any) => {
-    try {
-      setLoading(true);
-      const user = await signIn({
-        email: data.email,
-        password: data.password,
-      });
-      if (!user) {
-        return enqueueSnackbar('An error occured. Please try again', {
-          variant: 'error',
-          preventDuplicate: true,
-        });
-      }
-      if (user.is_2fa_enabled) {
-        setAuthModal(true);
-        return;
-      }
-      setState({ isLoggedIn: true, user: authUser });
-      enqueueSnackbar('Login successful!', {
-        variant: 'success',
-        preventDuplicate: true,
-      });
-      router.push('/');
-      router.refresh();
-    } catch {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [code, setCode] = useState<string>('');
 
   const handleClickShowPassword = () => {
     setValues({
@@ -66,15 +39,36 @@ const LoginForm = () => {
     });
   };
 
-  const handleOtpVerification = () => {
-    setState({ isLoggedIn: true, user: authUser });
-    setCookie(ACCESS_TOKEN_KEY, '234trgfef34wrstgeqf4qersf3rwef3rd');
-    enqueueSnackbar('Login successful!', {
-      variant: 'success',
-      preventDuplicate: true,
-    });
-    router.push('/');
-    router.refresh();
+  const handleLogin = async (data: any) => {
+    try {
+      setLoading(true);
+      const res = await initiateLogin({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+      console.log(res);
+      // setAuthModal(true);
+      return;
+    } catch {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpVerification = async () => {
+    // Todo: api and set state
+    const res = await finalizeLogin({
+      email: values.email,
+      two_factor_code: code,
+    }).unwrap();
+    console.log({ res });
+    // enqueueSnackbar('Login successful!', {
+    //   variant: 'success',
+    //   preventDuplicate: true,
+    // });
+    // setAuthModal(false);
+    // router.push('/');
+    // router.refresh();
   };
 
   return (
@@ -89,7 +83,8 @@ const LoginForm = () => {
             fullWidth
             fieldName={'email'}
             label={'Email'}
-            defaultValue='demo@example.com'
+            value={values.email}
+            defaultValue={values.email}
           />
           <JumboOutlinedInput
             fieldName={'password'}
@@ -108,7 +103,7 @@ const LoginForm = () => {
               </InputAdornment>
             }
             sx={{ bgcolor: (theme) => theme.palette.background.paper }}
-            defaultValue={'zab#723'}
+            defaultValue={values.password}
           />
 
           <Stack
@@ -139,14 +134,12 @@ const LoginForm = () => {
         </Stack>
       </JumboForm>
       <OtpModal
+        loading={verifying}
         open={authModal}
         onClose={() => {
           setAuthModal(false);
         }}
-        onSubmit={() => {
-          setAuthModal(false);
-          handleOtpVerification();
-        }}
+        onSubmit={handleOtpVerification}
       />
     </>
   );

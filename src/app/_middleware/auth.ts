@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN_KEY } from '@app/_utilities/constants';
+import { getAuthToken } from '@app/_utilities/helpers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export function authMiddleware(request: NextRequest) {
@@ -12,8 +13,7 @@ export function authMiddleware(request: NextRequest) {
 }
 
 export function anonymousMiddleware(req: NextRequest) {
-  const accessToken = req.cookies.get(ACCESS_TOKEN_KEY);
-
+  const accessToken = getAuthToken() || req.cookies.get(ACCESS_TOKEN_KEY);
   if (accessToken) {
     const url = req.nextUrl.clone();
     url.pathname = `/`; // Redirect logged-in users to dashboard
@@ -21,6 +21,5 @@ export function anonymousMiddleware(req: NextRequest) {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
   }
-
   return NextResponse.next();
 }

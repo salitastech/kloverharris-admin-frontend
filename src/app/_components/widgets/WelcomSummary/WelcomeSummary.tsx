@@ -1,4 +1,3 @@
-'use client';
 import { JumboCard } from '@jumbo/components';
 import Grid from '@mui/material/Grid2';
 import { GeneralInfo } from './components/GeneralInfo';

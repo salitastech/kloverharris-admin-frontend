@@ -21,5 +21,5 @@ const dictionaries: LocaleDictionary = {
 };
 
 export const getDictionary = async (locale: string) => {
-  return dictionaries[locale]();
+  return dictionaries['en-US']();
 };

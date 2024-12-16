@@ -1,4 +1,4 @@
-import { getDictionary } from '@app/[lang]/dictionaries';
+import { getDictionary } from '@app/(app)/dictionaries';
 import { CurrentProjectsList } from '@app/_components/widgets/CurrentProjectsList';
 import { FilesCounterCard } from '@app/_components/widgets/FilesCounterCard/FilesCounterCard';
 import { Growth } from '@app/_components/widgets/Growth';
@@ -20,8 +20,7 @@ type Params = { lang: string };
 export default async function Dashboard({ params }: { params: Params }) {
   const { lang } = params;
   const { widgets } = await getDictionary(lang);
-  const res = await fetch('/api', { method: 'POST' });
-  console.log({ res });
+
   return (
     <Container
       maxWidth={false}

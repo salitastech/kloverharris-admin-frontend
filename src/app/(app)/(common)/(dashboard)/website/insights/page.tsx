@@ -1,4 +1,4 @@
-import { getDictionary } from '@app/[lang]/dictionaries';
+import { getDictionary } from '@app/(app)/dictionaries';
 import { View } from '@app/_components/_core';
 import {
   ProjectItem,
