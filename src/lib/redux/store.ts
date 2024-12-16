@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import Api from './api/api';
 import { rtkQueryErrorLogger } from './middlewares/redux-error-handler.middleware';
+import { authReducer } from './reducers/auth.reducer';
 
 // Combine reducers
 const rootReducer = combineReducers({
+  authReducer,
   [Api.reducerPath]: Api.reducer,
 });
 

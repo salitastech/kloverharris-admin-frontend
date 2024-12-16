@@ -1,3 +1,5 @@
+import { anonymousMiddleware, authMiddleware } from '@app/_middleware/auth';
+import { isAnonymousPath, isPublicPath } from '@app/_utilities/helpers/path';
 import Negotiator from 'negotiator';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -15,11 +17,11 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   // console.log({ pathname });
 
-  // if (isPublicPath(pathname)) {
-  return NextResponse.next();
-  // }
-  // if (isAnonymousPath(pathname)) {
-  //   return anonymousMiddleware(request);
-  // }
-  // return authMiddleware(request);
+  if (isPublicPath(pathname)) {
+    return NextResponse.next();
+  }
+  if (isAnonymousPath(pathname)) {
+    return anonymousMiddleware(request);
+  }
+  return authMiddleware(request);
 }

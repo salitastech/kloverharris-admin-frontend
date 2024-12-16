@@ -3,6 +3,7 @@ import { getErrorMessage } from '@app/_utilities/helpers';
 import { isRejectedWithValue, type MiddlewareAPI } from '@reduxjs/toolkit';
 import JsCookie from 'js-cookie';
 import { enqueueSnackbar } from 'notistack';
+import { logout } from '../reducers/auth.reducer';
 
 const IsBrowser = typeof window !== 'undefined';
 
@@ -22,10 +23,7 @@ export const rtkQueryErrorLogger =
       ) {
         JsCookie.remove(ACCESS_TOKEN_KEY);
         window.location.href = '/auth/login';
-        //   Todo
-        // api
-        //   .dispatch
-        // (handleLogout(async () => {}))
+        api.dispatch(logout());
         return;
       }
       if (
@@ -39,8 +37,8 @@ export const rtkQueryErrorLogger =
       if (action?.payload?.status === 'FETCH_ERROR') {
         if (IsBrowser) {
           enqueueSnackbar(
-            'Network Error, Please check that you have active internet connection.',
-            { variant: 'error', preventDuplicate: true, autoHideDuration: 5000 }
+            'Network Error. Ensure you have an active internet connection.',
+            { variant: 'error', preventDuplicate: true }
           );
         }
       } else {
@@ -49,7 +47,7 @@ export const rtkQueryErrorLogger =
             serverMessage ||
               action?.error?.message ||
               'Oops! something went wrong',
-            { variant: 'error', preventDuplicate: true, autoHideDuration: 5000 }
+            { variant: 'error', preventDuplicate: true }
           );
         }
       }

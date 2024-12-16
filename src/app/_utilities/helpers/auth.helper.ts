@@ -31,6 +31,7 @@ export const signIn = async (
 
 export const signOut = async (next?: () => void) => {
   JS_COOKIE.remove(ACCESS_TOKEN_KEY);
+  if (next) next();
 };
 
 export const getErrorMessage = (error: any) => {
