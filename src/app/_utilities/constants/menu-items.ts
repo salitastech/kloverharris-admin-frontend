@@ -8,31 +8,29 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
   return [
     {
       label: sidebar.menu.dashboard,
-      children: [
-        { label: sidebar.menu.dashboard, path: `/${locale}`, icon: 'misc' },
-      ],
+      children: [{ label: sidebar.menu.dashboard, path: `/`, icon: 'misc' }],
     },
     {
       label: sidebar.menu.website_management,
       children: [
         {
           label: sidebar.menuItem.insights,
-          path: `/${locale}/website/insights`,
+          path: `/website/insights`,
           icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.publications,
-          path: `/${locale}/website/publications`,
+          path: `/website/publications`,
           icon: 'users-list',
         },
         {
           label: sidebar.menuItem.contacts,
-          path: `/${locale}/website/contacts`,
+          path: `/website/contacts`,
           icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.book_demo,
-          path: `/${locale}/website/demo`,
+          path: `/website/demo`,
           icon: 'contact-us',
         },
       ],
@@ -42,22 +40,22 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.add_new_client,
-          path: `/${locale}/clients/new`,
+          path: `/clients/new`,
           icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.clients,
-          path: `/${locale}/clients`,
+          path: `/clients`,
           icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.employees,
-          path: `/${locale}/clients/employees`,
+          path: `/clients/employees`,
           icon: 'users-list',
         },
         {
           label: sidebar.menuItem.departments,
-          path: `/${locale}/clients/departments`,
+          path: `/clients/departments`,
           icon: 'contact-us',
         },
       ],
@@ -67,14 +65,14 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.add_new_job,
-          path: `/${locale}/jobs/create`,
+          path: `/jobs/create`,
         },
-        { label: sidebar.menuItem.jobs, path: `/${locale}/jobs` },
+        { label: sidebar.menuItem.jobs, path: `/jobs` },
         {
           label: sidebar.menuItem.job_applications,
-          path: `/${locale}/job-applications`,
+          path: `/job-applications`,
         },
-        { label: sidebar.menuItem.interviews, path: `/${locale}/interviews` },
+        { label: sidebar.menuItem.interviews, path: `/interviews` },
       ],
     },
     {
@@ -82,11 +80,11 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.all_leaves,
-          path: `/${locale}/leaves`,
+          path: `/leaves`,
         },
         {
           label: sidebar.menuItem.leave_requests,
-          path: `/${locale}/leaves/requests`,
+          path: `/leaves/requests`,
         },
       ],
     },
@@ -95,15 +93,15 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.admins,
-          path: `/${locale}/admins`,
+          path: `/admins`,
         },
         {
           label: sidebar.menuItem.roles_permissions,
-          path: `/${locale}/roles-permissions`,
+          path: `/roles-permissions`,
         },
         {
           label: sidebar.menuItem.activity_logs,
-          path: `/${locale}/activity-logs`,
+          path: `/activity-logs`,
         },
       ],
     },
@@ -112,7 +110,7 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.tickets,
-          path: `/${locale}/support/tickets`,
+          path: `/support/tickets`,
         },
       ],
     },
@@ -121,11 +119,11 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       children: [
         {
           label: sidebar.menuItem.reports,
-          path: `/${locale}/analytics/reports`,
+          path: `/analytics/reports`,
         },
         {
           label: sidebar.menuItem.statistics,
-          path: `/${locale}/analytics/statistics`,
+          path: `/analytics/statistics`,
           icon: 'chart',
         },
       ],
