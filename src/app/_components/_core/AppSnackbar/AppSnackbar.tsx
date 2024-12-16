@@ -9,6 +9,7 @@ const AppSnackbar = ({ children }: { children: React.ReactNode }) => {
         vertical: 'bottom',
         horizontal: 'right',
       }}
+      autoHideDuration={5000}
       maxSnack={3}
     >
       {children}

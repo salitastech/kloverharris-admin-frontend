@@ -1,5 +1,4 @@
-import { getDictionary } from '@app/[lang]/dictionaries';
-import { CurrencyCalculator } from '@app/_components/widgets/CurrencyCalculator';
+import { getDictionary } from '@app/(app)/dictionaries';
 import { CurrentProjectsList } from '@app/_components/widgets/CurrentProjectsList';
 import { FilesCounterCard } from '@app/_components/widgets/FilesCounterCard/FilesCounterCard';
 import { Growth } from '@app/_components/widgets/Growth';
@@ -8,7 +7,6 @@ import { ProjectCounterCard } from '@app/_components/widgets/ProjectCounterCard'
 import { RecentActivities1 } from '@app/_components/widgets/RecentActivities1';
 import { RecentTickets } from '@app/_components/widgets/RecentTickets';
 import { RevenueHistory } from '@app/_components/widgets/RevenueHistory';
-import { RevenueOverview } from '@app/_components/widgets/RevenueOverview';
 import { TasksCounterCard } from '@app/_components/widgets/TaskCounterCard';
 import { TasksList2 } from '@app/_components/widgets/TasksList2';
 import { TeamsCounterCard } from '@app/_components/widgets/TeamsCounterCard';
@@ -22,6 +20,7 @@ type Params = { lang: string };
 export default async function Dashboard({ params }: { params: Params }) {
   const { lang } = params;
   const { widgets } = await getDictionary(lang);
+
   return (
     <Container
       maxWidth={false}
@@ -77,14 +76,13 @@ export default async function Dashboard({ params }: { params: Params }) {
         <Grid2 size={{ xs: 12, md: 5, lg: 4 }}>
           <TicketsStatus title={widgets.title.ticketStatus} />
         </Grid2>
-       
+
         <Grid2 size={{ xs: 12, md: 6 }}>
           <RecentActivities1
             title={widgets.title.recentActivities}
             scrollHeight={306}
           />
         </Grid2>
-      
       </Grid2>
     </Container>
   );

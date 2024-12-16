@@ -1,14 +1,16 @@
-import { getDictionary } from '@app/[lang]/dictionaries';
+import { getDictionary } from '@app/(app)/dictionaries';
 import type { MenuItem } from '@jumbo/types';
 
 export async function getMenus(locale: string): Promise<Array<MenuItem>> {
-  const dictionary = await getDictionary(locale);
+  const dictionary = await getDictionary('en-US');
   const { sidebar } = dictionary;
 
   return [
     {
       label: sidebar.menu.dashboard,
-      children: [{ label: sidebar.menu.dashboard, path: `/${locale}`, icon: 'misc', }],
+      children: [
+        { label: sidebar.menu.dashboard, path: `/${locale}`, icon: 'misc' },
+      ],
     },
     {
       label: sidebar.menu.website_management,
@@ -27,7 +29,8 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
           label: sidebar.menuItem.contacts,
           path: `/${locale}/website/contacts`,
           icon: 'contact-us',
-        }, {
+        },
+        {
           label: sidebar.menuItem.book_demo,
           path: `/${locale}/website/demo`,
           icon: 'contact-us',
@@ -42,7 +45,11 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
           path: `/${locale}/clients/new`,
           icon: 'contact-us',
         },
-        { label: sidebar.menuItem.clients, path: `/${locale}/clients`, icon: 'contact-us', },
+        {
+          label: sidebar.menuItem.clients,
+          path: `/${locale}/clients`,
+          icon: 'contact-us',
+        },
         {
           label: sidebar.menuItem.employees,
           path: `/${locale}/clients/employees`,
@@ -119,7 +126,7 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
         {
           label: sidebar.menuItem.statistics,
           path: `/${locale}/analytics/statistics`,
-          icon: 'chart'
+          icon: 'chart',
         },
       ],
     },
@@ -129,7 +136,7 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
         {
           label: sidebar.menuItem.general_settings,
           path: `/${locale}/settings/general`,
-          icon: 'chart'
+          icon: 'chart',
         },
         {
           label: sidebar.menuItem.leave_policies,

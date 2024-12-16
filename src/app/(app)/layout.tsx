@@ -15,7 +15,7 @@ import {
 import { CssBaseline } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
-import RecoilContextProvider from '../../lib/recoil/provider';
+import ReduxStoreProvider from '../../providers/ReduxStoreProvider';
 
 declare module '@mui/material/styles' {
   interface Theme {
@@ -98,7 +98,7 @@ export default async function RootLayout({
       <body cz-shortcut-listen='true'>
         <div id='root'>
           <AppRouterCacheProvider>
-            <RecoilContextProvider>
+            <ReduxStoreProvider>
               <JumboConfigProvider LinkComponent={Link}>
                 <JumboTheme init={CONFIG.THEME}>
                   <CssBaseline />
@@ -108,7 +108,7 @@ export default async function RootLayout({
                   </JumboDialogProvider>
                 </JumboTheme>
               </JumboConfigProvider>
-            </RecoilContextProvider>
+            </ReduxStoreProvider>
           </AppRouterCacheProvider>
         </div>
       </body>

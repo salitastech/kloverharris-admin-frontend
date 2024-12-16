@@ -1,17 +1,15 @@
 import { anonymousPaths, publicPaths } from '@app/_config/routes/path';
 import { match } from 'path-to-regexp';
 
-function matchPathname(pathArray: string[], pathname: string, locale?: string) {
+function matchPathname(pathArray: string[], pathname: string) {
   return pathArray.some((path) => {
-    const pathMatcher = match(locale ? `/${locale}${path}` : path, {
-      decode: decodeURIComponent,
-    });
-    console.log(locale ? `/${locale}${path}` : path, pathname);
+    const pathMatcher = match(path, { decode: decodeURIComponent });
+    console.log({ path, pathname });
     return pathMatcher(pathname);
   });
 }
 
-export function isPublicPath(pathname: string, locale?: string) {
+export function isPublicPath(pathname: string) {
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
@@ -20,9 +18,9 @@ export function isPublicPath(pathname: string, locale?: string) {
     return true;
   }
 
-  return matchPathname(publicPaths, pathname, locale);
+  return matchPathname(publicPaths, pathname);
 }
 
-export function isAnonymousPath(pathname: string, locale?: string) {
-  return matchPathname(anonymousPaths, pathname, locale);
+export function isAnonymousPath(pathname: string) {
+  return matchPathname(anonymousPaths, pathname);
 }

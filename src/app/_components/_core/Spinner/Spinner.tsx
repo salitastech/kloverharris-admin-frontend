@@ -1,7 +1,8 @@
 import { Div } from '@jumbo/shared';
 import { CircularProgress } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const Spinner = () => {
+const Spinner = ({ size = 40, margin = '-40px auto 0', flex = 1 }) => {
   return (
     <Div
       sx={{
@@ -9,12 +10,18 @@ const Spinner = () => {
         minWidth: 0,
         alignItems: 'center',
         alignContent: 'center',
-        flex: 1,
+        flex: flex,
       }}
     >
-      <CircularProgress sx={{ m: '-40px auto 0' }} />
+      <CircularProgress sx={{ m: margin }} size={size} />
     </Div>
   );
+};
+
+Spinner.propTypes = {
+  size: PropTypes.number,
+  margin: PropTypes.string,
+  flex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export { Spinner };

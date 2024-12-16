@@ -17,19 +17,19 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
-import { authState } from '../../../../lib/recoil/store';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../../lib/redux/reducers/auth.reducer';
 import { authUser } from './data';
 
 const AuthUserPopover = () => {
   const router = useRouter();
   const { theme } = useJumboTheme();
-  const setState = useSetRecoilState(authState);
+  const dispatch = useDispatch();
 
-  const logout = React.useCallback(() => {
+  const handleLogout = React.useCallback(() => {
     (async () => {
       await signOut(() => {
-        setState({ isLoggedIn: false, user: null });
+        dispatch(logout());
         router.refresh();
       });
     })();
@@ -80,7 +80,7 @@ const AuthUserPopover = () => {
               </ListItemIcon>
               <ListItemText primary='Edit Profile' sx={{ my: 0 }} />
             </ListItemButton>
-            <ListItemButton onClick={logout}>
+            <ListItemButton onClick={handleLogout}>
               <ListItemIcon sx={{ minWidth: 36 }}>
                 <LogoutIcon />
               </ListItemIcon>

@@ -1,63 +1,74 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import { useState } from 'react';
-import OtpInput from 'react18-input-otp';
+import { MuiOtpInput } from 'mui-one-time-password-input';
+import { useEffect, useState } from 'react';
 
 type Props = {
   title?: string;
   open: boolean;
+  loading?: boolean;
   onClose: () => void;
   onSubmit: (otp: string) => void;
 };
 
-const OtpModal = ({ open, onClose, onSubmit }: Props) => {
+const OtpModal = ({ loading, open, title, onClose, onSubmit }: Props) => {
   const [otp, setOtp] = useState<string>('');
 
   const handleOtpSubmit = () => {
     if (otp.trim().length === 6) {
       onSubmit(otp);
-      setOtp('');
+      // setOtp('');
     }
   };
 
+  useEffect(() => {
+    if (otp.trim().length === 6) onSubmit(otp);
+  }, [otp]);
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle sx={{ fontWeight: '600' }}>Enter OTP</DialogTitle>
+      <DialogTitle sx={{ fontWeight: '600' }}>
+        {title || 'Enter OTP'}
+      </DialogTitle>
       <DialogContent
         sx={{
-          width: '20em',
+          width: '33em',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
         }}
       >
-        <OtpInput
-          inputStyle='bg-[#FAFAFA] dark:bg-mentorfy-dark1 dark:text-white mx-[5px] rounded-[5px] !w-[300px] h-[36px]'
-          isInputNum
-          focusStyle='border border-mentorfy-primary'
+        <MuiOtpInput
+          width={'100%'}
+          autoFocus
+          length={6}
           value={otp}
-          onChange={setOtp}
-          numInputs={6}
+          onChange={(val) => setOtp(val)}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color='secondary'>
+        <Button disabled={loading} onClick={onClose} color='secondary'>
           Cancel
         </Button>
-        <Button
-          onClick={handleOtpSubmit}
-          variant='contained'
-          color='primary'
-          disabled={!otp}
-        >
-          Verify OTP
-        </Button>
+        {loading ? (
+          <CircularProgress size={20} />
+        ) : (
+          <Button
+            onClick={handleOtpSubmit}
+            variant='contained'
+            color='primary'
+            disabled={!otp || loading}
+          >
+            Verify OTP
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );
