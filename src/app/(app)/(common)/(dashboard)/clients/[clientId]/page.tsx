@@ -1,11 +1,16 @@
 'use client';
 
+import { Spinner } from '@app/_components/_core';
 import {
+  Alert,
+  AlertTitle,
   Box,
   Button,
+  Chip,
   Container,
   Grid,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -16,9 +21,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import {
+  useFetchCompanyEmployeesQuery,
+  useFetchCompanyProfileQuery,
+} from '../../../../../../lib/redux/api/company.api';
 
-// Mock data for the tables
+// Mock company for the tables
 const mockAdmins = [
   { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
   { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Admin' },
@@ -39,14 +49,31 @@ const mockInterviews = [
   { id: 2, jobTitle: 'Product Manager', status: 'Scheduled' },
 ];
 
-const ShowClientProfile = ({ clientId }: { clientId: string }) => {
+type Params = { clientId: string };
+
+const ShowClientProfile = () => {
+  const router = useRouter();
   const [search, setSearch] = useState('');
   const [admins, setAdmins] = useState(mockAdmins);
-  const [employees, setEmployees] = useState(mockEmployees);
   const [jobRoles, setJobRoles] = useState(mockJobRoles);
   const [interviews, setInterviews] = useState(mockInterviews);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const { clientId } = useParams<Params>();
+
+  const {
+    data: company,
+    error,
+    isLoading,
+  } = useFetchCompanyProfileQuery(clientId, {
+    refetchOnFocus: true,
+  });
+
+  const { data: employeesData, isLoading: employeesLoading } =
+    useFetchCompanyEmployeesQuery({ id: clientId }, { refetchOnFocus: true });
+
+  const employees = employeesData?.employees || [];
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -63,21 +90,99 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
     setPage(0);
   };
 
-  useEffect(() => {}, [clientId]);
+  if (!clientId) {
+    router.back();
+    return;
+  }
+
+  if (isLoading) return <Spinner />;
+
+  if (!isLoading && (error || !company)) {
+    return (
+      <Alert severity='error'>
+        <AlertTitle>Error fetching company profile details</AlertTitle>
+        An error occurred while fetching the profile.
+      </Alert>
+    );
+  }
 
   return (
     <Container maxWidth='lg'>
       <Typography variant='h4' gutterBottom>
-        Company Client Profile
+        Company Profile Information
       </Typography>
 
       <Grid container spacing={3}>
         {/* Company Details Section */}
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant='h6'>Company Information</Typography>
             <Box sx={{ marginTop: 2 }}>
-              {/* Add company details here, such as company name, email, etc. */}
+              {/* Company Details */}
+              <Stack spacing={1.5}>
+                <Typography>
+                  <strong>Company Name:</strong>{' '}
+                  {company?.company_name || '---'}
+                </Typography>
+                <Typography>
+                  <strong>Registration Number:</strong>{' '}
+                  {company?.registration_number || '---'}
+                </Typography>
+                <Typography>
+                  <strong>Email:</strong>{' '}
+                  <a href='mailto:hharvey@reinger.com'>
+                    {company?.email || '---'}
+                  </a>
+                </Typography>
+                <Typography>
+                  <strong>Phone Number:</strong>{' '}
+                  {company?.phone_number || '---'}
+                </Typography>
+                <Typography>
+                  <strong>Website:</strong>{' '}
+                  <a
+                    href={company?.website || ''}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {company?.website || '---'}
+                  </a>
+                </Typography>
+                <Typography>
+                  <strong>Region:</strong> {company?.region || '---'}
+                </Typography>
+                <Typography>
+                  <strong>City:</strong> {company?.city}
+                </Typography>
+                <Typography>
+                  <strong>Postal Code:</strong> {company?.postal_code}
+                </Typography>
+                <Typography>
+                  <strong>Address:</strong>
+                  {company?.address}
+                </Typography>
+                <Typography>
+                  <strong>Industry:</strong> {company?.industry}
+                </Typography>
+                <Typography>
+                  <strong>Country:</strong> {company?.country.name}{' '}
+                  {company?.country.iso3}
+                </Typography>
+                <Typography>
+                  <strong>Total Number of Employees:</strong>{' '}
+                  {company?.meta.total_number_of_employees}
+                </Typography>
+                <Stack direction='row' spacing={1} alignItems='center'>
+                  <Typography>
+                    <strong>Status:</strong>
+                  </Typography>
+                  <Chip
+                    label={!company?.is_active ? 'Inactive' : 'Active'}
+                    color={!company?.is_active ? 'error' : 'success'}
+                    variant='outlined'
+                    sx={{ fontWeight: 'bold' }}
+                  />
+                </Stack>
+              </Stack>
             </Box>
           </Paper>
         </Grid>
@@ -173,18 +278,40 @@ const ShowClientProfile = ({ clientId }: { clientId: string }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {employees
-                    .filter((employee) =>
-                      employee.name.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((employee) => (
-                      <TableRow key={employee.id}>
-                        <TableCell>{employee.name}</TableCell>
-                        <TableCell>{employee.email}</TableCell>
-                        <TableCell>{employee.role}</TableCell>
-                      </TableRow>
-                    ))}
+                  {employeesLoading ? (
+                    <TableRow>Loading...</TableRow>
+                  ) : (
+                    employees
+                      ?.filter((employee) =>
+                        employee.user.first_name
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                      )
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((employee) => (
+                        <TableRow
+                          key={employee.id}
+                          sx={{
+                            '&:hover': {
+                              backgroundColor: '#f5f5f5',
+                              cursor: 'pointer',
+                            },
+                          }}
+                          onClick={() =>
+                            router.push(
+                              `/clients/${company.id}/employees/${employee.id}`
+                            )
+                          }
+                        >
+                          <TableCell>{employee.user.first_name}</TableCell>
+                          <TableCell>{employee.user.email}</TableCell>
+                          <TableCell>{employee.role}</TableCell>
+                        </TableRow>
+                      ))
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>

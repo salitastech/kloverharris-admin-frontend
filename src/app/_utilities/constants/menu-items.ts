@@ -1,3 +1,4 @@
+// &&
 import { getDictionary } from '@app/(app)/dictionaries';
 import type { MenuItem } from '@jumbo/types';
 

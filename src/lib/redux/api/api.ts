@@ -23,7 +23,7 @@ export const Api = createApi({
   reducerPath: 'api-handler',
   baseQuery,
   endpoints: () => ({}),
-  tagTypes: ['CURRENT_PROFILE'],
+  tagTypes: ['CURRENT_PROFILE', 'EMPLOYEES', 'COMPANIES'],
 });
 
 export default Api;
