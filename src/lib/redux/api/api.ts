@@ -5,10 +5,10 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 const prepareHeaders = (headers: Headers) => {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY!;
-  // headers.set('x-api-key', apiKey);
+  headers.set('x-api-key', apiKey);
   headers.set('X-API-KEY', apiKey);
+  headers.set('Accept', `application/json`);
   const token = getAuthToken();
-  // headers.set('Origin', ``);
   if (token) headers.set('Authorization', `Bearer ${token}`);
   return headers;
 };

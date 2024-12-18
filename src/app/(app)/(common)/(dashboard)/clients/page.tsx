@@ -47,7 +47,6 @@ const ListAllClients = () => {
   const handleFetchData = async () => {
     setIsLoading(true);
     try {
-      const filter = {};
       const res = await fetchData(search ? { search } : queryFilter).unwrap();
       if (res) {
         setTotal(res.pagination.total_pages);
@@ -126,11 +125,7 @@ const ListAllClients = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Country</InputLabel>
-              <Select
-                value={queryFilter?.country_id}
-                onChange={handleCountryChange}
-                label='Country'
-              >
+              <Select onChange={handleCountryChange} label='Country'>
                 <MenuItem value=''>All</MenuItem>
                 <MenuItem value='1'>United States</MenuItem>
                 <MenuItem value='2'>Canada</MenuItem>
@@ -142,11 +137,7 @@ const ListAllClients = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Industry</InputLabel>
-              <Select
-                value={queryFilter?.industry}
-                onChange={handleIndustryChange}
-                label='Industry'
-              >
+              <Select onChange={handleIndustryChange} label='Industry'>
                 <MenuItem value=''>All</MenuItem>
                 <MenuItem value='Finance'>Finance</MenuItem>
                 <MenuItem value='Technology'>Technology</MenuItem>
@@ -169,11 +160,7 @@ const ListAllClients = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Sort Direction</InputLabel>
-              <Select
-                value={queryFilter?.sort_direction}
-                onChange={handleSortChange}
-                label='Sort Direction'
-              >
+              <Select onChange={handleSortChange} label='Sort Direction'>
                 <MenuItem value='asc'>Ascending</MenuItem>
                 <MenuItem value='desc'>Descending</MenuItem>
               </Select>
@@ -198,6 +185,10 @@ const ListAllClients = () => {
             {isLoading ? (
               <TableRow>
                 <TableCell>Loading...</TableCell>
+              </TableRow>
+            ) : data?.data?.length === 0 ? (
+              <TableRow>
+                <TableCell>No data to show</TableCell>
               </TableRow>
             ) : (
               data?.data?.map((client) => (

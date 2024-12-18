@@ -37,7 +37,7 @@ const company = Api.injectEndpoints({
     >({
       query: (queryParams) => ({
         url: `/company-clients`,
-        params: queryParams || {},
+        params: queryParams || undefined,
       }),
       providesTags: [{ type: 'COMPANIES', id: 'LIST' }],
       transformResponse: (res: {
