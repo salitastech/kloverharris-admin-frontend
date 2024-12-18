@@ -25,6 +25,7 @@
       "all_leaves": "Leaves",
       "leave_requests": "Manage Leaves",
       "admins": "Manage Admins",
+      "users": "Manage Users",
       "roles_permissions": "Roles and Permissions",
       "activity_logs": "Activity Logs",
       "tickets": "Tickets",

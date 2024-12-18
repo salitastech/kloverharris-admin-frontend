@@ -93,16 +93,24 @@ export async function getMenus(locale: string): Promise<Array<MenuItem>> {
       label: sidebar.menu.user_management,
       children: [
         {
+          label: sidebar.menuItem.users,
+          path: `/users`,
+          icon: 'contact-us',
+        },
+        {
           label: sidebar.menuItem.admins,
           path: `/admins`,
+          icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.roles_permissions,
           path: `/roles-permissions`,
+          icon: 'contact-us',
         },
         {
           label: sidebar.menuItem.activity_logs,
-          path: `/activity-logs`,
+          path: `/users/activity-logs`,
+          icon: 'contact-us',
         },
       ],
     },
