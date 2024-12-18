@@ -23,6 +23,7 @@ import {
 } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { EmployeeRole } from '../../../../../../interfaces';
 import {
   useFetchCompanyEmployeesQuery,
   useFetchCompanyProfileQuery,
@@ -74,6 +75,11 @@ const ShowClientProfile = () => {
     useFetchCompanyEmployeesQuery({ id: clientId }, { refetchOnFocus: true });
 
   const employees = employeesData?.employees || [];
+  
+  // Todo:
+  // const admins = employeesData?.employees.filter(
+  //   (user) => user.role === EmployeeRole.Manager
+  // );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

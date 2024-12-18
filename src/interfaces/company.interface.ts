@@ -30,12 +30,16 @@ export interface Meta {
   total_number_of_employees: number;
 }
 
+export enum EmployeeRole {
+  Manager = 'Manager',
+  Employee = 'Employee',
+}
 export interface IEmployee {
   id: number;
   user: IEmployeeUser;
   job_title: string;
   department: string;
-  role: string;
+  role: EmployeeRole;
   hire_date: Date;
   start_date: Date;
   end_date: Date;
