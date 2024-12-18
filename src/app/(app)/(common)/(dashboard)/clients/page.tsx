@@ -9,7 +9,6 @@ import {
   Paper,
   Select,
   type SelectChangeEvent,
-  type SortDirection,
   Table,
   TableBody,
   TableCell,
@@ -27,26 +26,18 @@ import { useLazyFetchAllCompaniesQuery } from '../../../../../lib/redux/api/comp
 const ListAllClients = () => {
   const router = useRouter();
   const [search, setSearch] = useState('');
-  const [countryId, setCountryId] = useState('');
-  const [industry, setIndustry] = useState('');
-  const [isActive, setIsActive] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [total, setTotal] = useState(0);
+  const [queryFilter, setQueryFilter] = useState<Record<string, any>>({});
 
-  const queryParams = useMemo(
+  const pagination = useMemo(
     () => ({
-      search,
-      country_id: countryId,
-      industry,
-      is_active: isActive,
-      sort_direction: sortDirection,
       page: page + 1,
       per_page: rowsPerPage,
     }),
-    [search, countryId, industry, isActive, sortDirection, page, rowsPerPage]
+    [page, rowsPerPage]
   );
 
   const [fetchData, { data }] = useLazyFetchAllCompaniesQuery({
@@ -56,7 +47,8 @@ const ListAllClients = () => {
   const handleFetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetchData(queryParams).unwrap();
+      const filter = {};
+      const res = await fetchData(search ? { search } : queryFilter).unwrap();
       if (res) {
         setTotal(res.pagination.total_pages);
         setRowsPerPage(res.pagination.per_page);
@@ -79,21 +71,23 @@ const ListAllClients = () => {
     setSearch(e.target.value);
   };
 
-  const handleCountryChange = (e: SelectChangeEvent) => {
-    setCountryId(e.target.value);
+  const handleCountryChange = ({ target: { value } }: SelectChangeEvent) => {
+    setQueryFilter((p) => ({ ...p, country_id: value }));
   };
 
-  const handleIndustryChange = (e: SelectChangeEvent) => {
-    setIndustry(e.target.value);
+  const handleIndustryChange = ({ target: { value } }: SelectChangeEvent) => {
+    setQueryFilter((p) => ({ ...p, industry: value }));
   };
 
   const handleStatusChange = ({ target: { value } }: SelectChangeEvent) => {
-    if (value == 'active') setIsActive(true);
-    else if (value == 'inactive') setIsActive(false);
+    setQueryFilter((p) => ({
+      ...p,
+      is_active: value == 'active' ? true : false,
+    }));
   };
 
   const handleSortChange = (e: SelectChangeEvent) => {
-    setSortDirection(e.target.value as SortDirection);
+    setQueryFilter((p) => ({ ...p, sort_direction: e.target.value }));
   };
 
   const handlePageChange = (event: unknown, newPage: number) => {
@@ -109,7 +103,7 @@ const ListAllClients = () => {
 
   useEffect(() => {
     handleFetchData();
-  }, [queryParams]);
+  }, [queryFilter, search]);
 
   return (
     <Container maxWidth='lg'>
@@ -133,7 +127,7 @@ const ListAllClients = () => {
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Country</InputLabel>
               <Select
-                value={countryId}
+                value={queryFilter?.country_id}
                 onChange={handleCountryChange}
                 label='Country'
               >
@@ -149,7 +143,7 @@ const ListAllClients = () => {
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Industry</InputLabel>
               <Select
-                value={industry}
+                value={queryFilter?.industry}
                 onChange={handleIndustryChange}
                 label='Industry'
               >
@@ -164,11 +158,7 @@ const ListAllClients = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Status</InputLabel>
-              <Select
-                value={String(isActive)}
-                onChange={handleStatusChange}
-                label='Status'
-              >
+              <Select onChange={handleStatusChange} label='Status'>
                 <MenuItem value='all'>All</MenuItem>
                 <MenuItem value='active'>Active</MenuItem>
                 <MenuItem value='inactive'>Inactive</MenuItem>
@@ -180,7 +170,7 @@ const ListAllClients = () => {
             <FormControl fullWidth variant='outlined'>
               <InputLabel>Sort Direction</InputLabel>
               <Select
-                value={String(sortDirection)}
+                value={queryFilter?.sort_direction}
                 onChange={handleSortChange}
                 label='Sort Direction'
               >
