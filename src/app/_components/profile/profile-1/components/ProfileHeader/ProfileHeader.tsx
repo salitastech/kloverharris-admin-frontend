@@ -1,5 +1,4 @@
 import { ContentHeader } from '@app/_components/_core';
-import { ASSET_AVATARS } from '@app/_utilities/constants/paths';
 import { getAssetPath } from '@app/_utilities/helpers';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {
@@ -12,6 +11,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
+import type { ICompany } from '../../../../../../interfaces';
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   padding: theme.spacing(0, 1),
@@ -29,24 +29,24 @@ const Item = styled('div')({
   textAlign: 'center',
 });
 
-const ProfileHeader = () => {
+const ProfileHeader = (company?: ICompany) => {
   return (
     <ContentHeader
       avatar={
         <Avatar
           sx={{ width: { xs: 48, sm: 72 }, height: { xs: 48, sm: 72 } }}
-          alt={'Remy Sharp'}
-          src={getAssetPath(`${ASSET_AVATARS}/avatar3.jpg`, '72x72')}
+          alt={''}
+          src={company?.logo_url || getAssetPath(``, '72x72', true)}
         />
       }
       title={
         <Typography fontSize={18} variant={'body1'} color={'inherit'}>
-          Kiley Brown
+          {company?.company_name || '---'}
         </Typography>
       }
       subheader={
         <Typography fontSize={12} variant={'body1'} color={'inherit'} mt={0.5}>
-          Florida, USA
+          {company?.address || '---'}
         </Typography>
       }
       tabs={
@@ -57,10 +57,6 @@ const ProfileHeader = () => {
             minWidth: 0,
           }}
         >
-          <StyledMenuItem>Timeline</StyledMenuItem>
-          <StyledMenuItem>About</StyledMenuItem>
-          <StyledMenuItem>Photos</StyledMenuItem>
-          <StyledMenuItem>Friends</StyledMenuItem>
           <StyledMenuItem>More</StyledMenuItem>
         </List>
       }
@@ -97,32 +93,14 @@ const ProfileHeader = () => {
         justifyContent={'space-evenly'}
         divider={<Divider orientation='vertical' flexItem />}
         spacing={2}
-        sx={{
-          mx: 1,
-        }}
+        sx={{ mx: 1 }}
       >
         <Item>
           <Typography variant={'h6'} color={'inherit'} mb={0}>
-            457
+            {company?.meta.total_number_of_employees || 0}
           </Typography>
           <Typography variant={'body1'} fontSize={12}>
-            Followers
-          </Typography>
-        </Item>
-        <Item>
-          <Typography variant={'h6'} color={'inherit'} mb={0}>
-            689
-          </Typography>
-          <Typography variant={'body1'} fontSize={12}>
-            Friends
-          </Typography>
-        </Item>
-        <Item>
-          <Typography variant={'h6'} color={'inherit'} mb={0}>
-            283
-          </Typography>
-          <Typography variant={'body1'} fontSize={12}>
-            Following
+            Employees
           </Typography>
         </Item>
       </Stack>

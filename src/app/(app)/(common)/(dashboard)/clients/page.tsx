@@ -181,17 +181,17 @@ const ListAllClients = () => {
               <TableCell>Employees</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell>Loading...</TableCell>
-              </TableRow>
-            ) : data?.data?.length === 0 ? (
-              <TableRow>
-                <TableCell>No data to show</TableCell>
-              </TableRow>
-            ) : (
-              data?.data?.map((client) => (
+          {isLoading ? (
+            <>
+              <>Loading...</>
+            </>
+          ) : data?.data?.length === 0 ? (
+            <>
+              <>No data to show</>
+            </>
+          ) : (
+            <TableBody>
+              {data?.data?.map((client) => (
                 <TableRow
                   key={client.id}
                   sx={{
@@ -209,9 +209,9 @@ const ListAllClients = () => {
                   <TableCell>{client.country?.name || 'N/A'}</TableCell>
                   <TableCell>{client.meta.total_number_of_employees}</TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
+              ))}
+            </TableBody>
+          )}
         </Table>
 
         <TablePagination

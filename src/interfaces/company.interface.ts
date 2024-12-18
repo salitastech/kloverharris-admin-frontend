@@ -1,6 +1,7 @@
 export interface ICompany {
   id: string;
   company_name: string;
+  logo_url: string | null;
   registration_number: string;
   email: string;
   phone_number: string;

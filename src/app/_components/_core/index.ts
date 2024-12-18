@@ -1,4 +1,5 @@
 export * from './AppSnackbar';
+export * from './ContentHeader';
 export * from './ContentThemeProvider';
 export * from './LangProvider';
 export * from './Logo';

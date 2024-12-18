@@ -5,13 +5,12 @@ import {
   About,
   Biography,
   ProfileHeader,
-  UserProfileSidebar,
 } from '@app/_components/profile/profile-1';
 import { ContentLayout } from '@app/_layout/ContentLayout';
 import { ASSET_IMAGES } from '@app/_utilities/constants/paths';
 import { getAssetPath } from '@app/_utilities/helpers';
 import { useJumboTheme } from '@jumbo/components/JumboTheme/hooks';
-import { Alert, AlertTitle, Stack } from '@mui/material';
+import { Alert, AlertTitle, alpha, Stack } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import {
@@ -106,12 +105,12 @@ const ShowClientProfile = () => {
 
   return (
     <ContentLayout
-      header={<ProfileHeader />}
-      sidebar={<UserProfileSidebar />}
+      header={<ProfileHeader {...company} />}
+      sidebar={null}
       {...profileLayoutOptions}
     >
       <Stack spacing={3.75}>
-        <About />
+        <About {...company} />
         <Biography />
       </Stack>
     </ContentLayout>

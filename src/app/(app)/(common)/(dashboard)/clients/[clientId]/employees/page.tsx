@@ -4,6 +4,7 @@ import {
   Box,
   Card,
   CardContent,
+  Chip,
   FormControl,
   Grid,
   InputLabel,
@@ -19,70 +20,75 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import type { IEmployee } from '../../../../../../../interfaces';
+import { useMemo, useState } from 'react';
 import { useFetchCompanyEmployeesQuery } from '../../../../../../../lib/redux/api/company.api';
-
-export async function getStaticProps(context) {
-  console.log({ context });
-  const data = {};
-  return { props: { data }, revalidate: 10 };
-}
 
 const ListAllEmployees = () => {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [sortField, setSortField] = useState('hire_date');
   const [sortOrder, setSortOrder] = useState('asc');
-  const [filteredEmployees, setFilteredEmployees] = useState<IEmployee[]>([]);
   const { clientId }: any = useParams();
-  const { data, isLoading } = useFetchCompanyEmployeesQuery({ id: clientId });
-
+  const { data, isLoading } = useFetchCompanyEmployeesQuery(
+    { id: clientId },
+    { refetchOnFocus: true }
+  );
   const employees = data?.employees || [];
+  const meta = (data || {})?.meta;
+  // const [filteredEmployees, setFilteredEmployees] = useState<IEmployee[]>([
+  //   ...employees,
+  // ]);
 
-  useEffect(() => {
-    if (!employees || employees.length === 0) {
-      setFilteredEmployees([]);
-      return;
-    }
+  const filteredEmployees = useMemo(() => {
+    const result = [...employees];
+    return result;
+  }, [employees, search]);
 
-    let result = [...employees];
+  // useEffect(() => {
+  //   // if (!employees || employees.length === 0) {
+  //   //   setFilteredEmployees([]);
+  //   //   return;
+  //   // }
 
-    // Filter by status
-    if (statusFilter) {
-      result = result.filter((employee) =>
-        statusFilter === 'active' ? employee.is_active : !employee.is_active
-      );
-    }
+  //   //   // Sort by the selected field
+  //   //   // result.sort((a, b) => {
+  //   //   //   const fieldA =
+  //   //   //     sortField === 'company'
+  //   //   //       ? a.company.company_name
+  //   //   //       : a[sortField as keyof IEmployee];
+  //   //   //   const fieldB =
+  //   //   //     sortField === 'company'
+  //   //   //       ? b.company.company_name
+  //   //   //       : b[sortField as keyof IEmployee];
 
-    // Search by name
-    if (search) {
-      result = result.filter((employee) =>
-        `${employee.user.first_name} ${employee.user.last_name}`
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      );
-    }
+  //   //   //   if (fieldA < fieldB) return sortOrder === 'asc' ? -1 : 1;
+  //   //   //   if (fieldA > fieldB) return sortOrder === 'asc' ? 1 : -1;
+  //   //   //   return 0;
+  //   // //   // });
 
-    // Sort by the selected field
-    // result.sort((a, b) => {
-    //   const fieldA =
-    //     sortField === 'company'
-    //       ? a.company.company_name
-    //       : a[sortField as keyof IEmployee];
-    //   const fieldB =
-    //     sortField === 'company'
-    //       ? b.company.company_name
-    //       : b[sortField as keyof IEmployee];
+  //   setFilteredEmployees((prev) => {
+  //     let result = [...prev];
 
-    //   if (fieldA < fieldB) return sortOrder === 'asc' ? -1 : 1;
-    //   if (fieldA > fieldB) return sortOrder === 'asc' ? 1 : -1;
-    //   return 0;
-    // });
+  //     // Filter by status
+  //     if (statusFilter) {
+  //       result = result.filter((employee) =>
+  //         statusFilter === 'active' ? employee.is_active : !employee.is_active
+  //       );
+  //     }
 
-    setFilteredEmployees(result);
-  }, [search, statusFilter, sortField, sortOrder, employees]);
+  //     // Search by name
+  //     if (search) {
+  //       result = result.filter((employee) =>
+  //         `${employee.user.first_name} ${employee.user.last_name}`
+  //           .toLowerCase()
+  //           .includes(search.toLowerCase())
+  //       );
+  //     }
+  //     return result;
+  //   });
+  // }, [search, statusFilter, sortField, sortOrder, employees]);
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -96,7 +102,7 @@ const ListAllEmployees = () => {
           <Card>
             <CardContent>
               <Typography variant='h6'>Total Employees</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>{meta?.total_employees || 0}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -104,7 +110,9 @@ const ListAllEmployees = () => {
           <Card>
             <CardContent>
               <Typography variant='h6'>Active Employees</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>
+                {meta?.active_employees || 0}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -112,7 +120,9 @@ const ListAllEmployees = () => {
           <Card>
             <CardContent>
               <Typography variant='h6'>Inactive Employees</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>
+                {meta?.inactive_employees || 0}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -120,7 +130,7 @@ const ListAllEmployees = () => {
           <Card>
             <CardContent>
               <Typography variant='h6'>Male Employees</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>{meta?.male_employees || 0}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -128,7 +138,9 @@ const ListAllEmployees = () => {
           <Card>
             <CardContent>
               <Typography variant='h6'>Female Employees</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>
+                {meta?.female_employees || 0}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -192,21 +204,35 @@ const ListAllEmployees = () => {
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {filteredEmployees.map((employee) => (
-              <TableRow key={employee.id}>
-                <TableCell>
-                  {employee.user.first_name} {employee.user.last_name}
-                </TableCell>
-                {/* <TableCell>{employee.company_name}</TableCell> */}
-                <TableCell>{employee.job_title}</TableCell>
-                {/* <TableCell>{employee.hire_date}</TableCell> */}
-                <TableCell>
-                  {employee.is_active ? 'Active' : 'Inactive'}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          {isLoading ? (
+            <>Loading...</>
+          ) : filteredEmployees.length == 0 ? (
+            <>No Data to Show</>
+          ) : (
+            <TableBody>
+              {filteredEmployees.map((employee) => (
+                <TableRow key={employee.id}>
+                  <TableCell>
+                    {employee.user.first_name} {employee.user.last_name}
+                  </TableCell>
+                  {/* <TableCell>{employee.company_name}</TableCell> */}
+                  <TableCell>{employee.job_title}</TableCell>
+                  {/* <TableCell>{employee.hire_date}</TableCell> */}
+                  <TableCell>{employee.job_title}</TableCell>
+                  <TableCell>
+                    {dayjs(new Date(employee.hire_date)).format('DD-MM-YYYY')}
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      color={employee.is_active ? 'success' : 'error'}
+                      label={employee.is_active ? 'Active' : 'Inactive'}
+                      size={'small'}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
     </Box>
